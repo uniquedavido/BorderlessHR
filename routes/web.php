@@ -25,3 +25,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Company Routes
 Route::get('/company/{id}/{company}', [App\Http\Controllers\CompanyController::class, 'index'])->name('company.index');
+
+// User Profile Routes
+Route::get('user/profile', [App\Http\Controllers\UserProfileController::class, 'index'])->name('profile.index');
+Route::post('user/profile/create', [App\Http\Controllers\UserProfileController::class, 'store'])->name('profile.create');
+Route::post('user/coverletter', [App\Http\Controllers\UserProfileController::class, 'coverletter'])->name('profile.coverletter');
+Route::post('user/resume', [App\Http\Controllers\UserProfileController::class, 'resume'])->name('profile.resume');
+Route::post('user/avatar', [App\Http\Controllers\UserProfileController::class, 'avatar'])->name('profile.avatar');
