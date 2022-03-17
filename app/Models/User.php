@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Profile;
+use App\Models\Company;
 
 class User extends Authenticatable
 {
@@ -44,5 +45,12 @@ class User extends Authenticatable
      */
     public function profile(){
         return $this->hasOne(Profile::class);
+    }
+
+    /**
+     * User has one company relationship
+     */
+    public function company(){
+        return $this->hasOne(Company::class);
     }
 }

@@ -5,9 +5,18 @@
     <div class="col-md-12">
     
         <div class="company-profile">
-            <img src="{{asset('cover_photo/cover.jpg')}}" style="width: 100%" alt="">
+            @if(empty(Auth::user()->company->cover_photo))
+                <img src="{{asset('cover_photo/cover.jpg')}}" style="width: 100%" alt="">
+            @else
+                <img src="{{asset('uploads/coverphoto')}}/{{Auth::user()->company->cover_photo}}" style="width: 100%" alt="">
+            @endif
             <div class="company-desc">
-                <img src="{{asset('avatar/female_avatar.png')}}" width="100" alt="">
+                <br>
+                @if(empty(Auth::user()->company->logo))
+                    <img src="{{asset('avatar/female_avatar.png')}}" width="100" alt="">
+                @else
+                    <img src="{{asset('uploads/logo')}}/{{Auth::user()->company->logo}}" width="100" alt="">
+                @endif
                 <h1>{{$company->name}} </h1>
                 <p><strong>Slogan</strong> - {{$company->slogan}} | <strong>Address</strong> - {{$company->address}} | <strong>Phone number</strong> - {{$company->phone}} | <strong>Website</strong> - {{$company->website}}</p>
                 <p><strong>Company description</strong> - {{$company->description}}</p>

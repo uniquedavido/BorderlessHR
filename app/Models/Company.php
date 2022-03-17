@@ -10,6 +10,11 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+                           'user_id', 'name', 'slug', 'address', 'phone', 'website', 
+                           'logo', 'cover_photo', 'slogan', 'description'
+                          ];
+
     public function getRouteKeyName()
     {
         return 'slug';
