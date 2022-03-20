@@ -18,10 +18,15 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// Job Routes
 Route::get('/', [App\Http\Controllers\JobController::class, 'index']);
 Route::get('/jobs/{id}/{job}', [App\Http\Controllers\JobController::class, 'show'])->name('jobs.show');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/jobs/create', [App\Http\Controllers\JobController::class, 'create'])->name('jobs.create');
+Route::post('/jobs/store', [App\Http\Controllers\JobController::class, 'store'])->name('jobs.store');
+Route::get('/job/{id}/edit', [App\Http\Controllers\JobController::class, 'edit'])->name('job.edit');
+Route::get('/jobs/my-job', [App\Http\Controllers\JobController::class, 'myjob'])->name('jobs.my-job');
 
 // Company Routes
 Route::get('/company/{id}/{company}', [App\Http\Controllers\CompanyController::class, 'index'])->name('company.index');

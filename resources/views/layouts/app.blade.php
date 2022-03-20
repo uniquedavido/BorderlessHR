@@ -10,7 +10,15 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script defer src="{{ asset('js/app.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script defer src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,6 +27,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/fbb7208bf3.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 </head>
 <body>
     <div id="app">
@@ -45,14 +55,17 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('employer.register') }}">{{ __('Employer Register') }}</a>
+                                    <a class="nav-link" href="{{ route('employer.register') }}">{{ __('Employer Registration') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Job Seeker Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Job Seeker Registration') }}</a>
                                 </li>
                             @endif
                         @else
+                            <li>
+                                <a href="{{route('jobs.create')}}" class="btn btn-secondary">Post a job</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     @if(isset(Auth::user()->company->name)) 
@@ -67,6 +80,10 @@
                                     @if(isset(Auth::user()->company->name))
                                         <a class="dropdown-item" href="{{ route('company.create') }}">
                                             {{ __('Company') }}
+                                        </a>
+
+                                        <a class="dropdown-item" href="{{ route('jobs.my-job') }}">
+                                            {{ __('My Jobs') }}
                                         </a>
                                     @else
                                         <a class="dropdown-item" href="{{ route('profile.index') }}">
