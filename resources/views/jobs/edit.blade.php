@@ -101,7 +101,7 @@
                     </div>
                     <div class="form-group">
                             <label for="Last Date">Deadline:</label>
-                            <input type="text" id="datepicker" name="last_date" class="form-control @error('last_date') is-invalid @enderror" value="{{ old('last_date') }}">
+                            <input type="text" id="datepicker" name="last_date" class="form-control @error('last_date') is-invalid @enderror" value="{{ $job->last_date }}">
                             @if($errors->has('last_date'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{$errors->first('last_date')}}</strong>
