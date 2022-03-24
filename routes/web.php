@@ -27,6 +27,8 @@ Route::get('/jobs/create', [App\Http\Controllers\JobController::class, 'create']
 Route::post('/jobs/store', [App\Http\Controllers\JobController::class, 'store'])->name('jobs.store');
 Route::get('/job/{id}/edit', [App\Http\Controllers\JobController::class, 'edit'])->name('job.edit');
 Route::get('/jobs/my-job', [App\Http\Controllers\JobController::class, 'myjob'])->name('jobs.my-job');
+Route::get('/jobs/applications', [App\Http\Controllers\JobController::class, 'applicants'])->name('jobs.applications');
+Route::get('/jobs/alljobs', [App\Http\Controllers\JobController::class, 'alljobs'])->name('jobs.alljobs');
 
 // Company Routes
 Route::get('/company/{id}/{company}', [App\Http\Controllers\CompanyController::class, 'index'])->name('company.index');
@@ -45,3 +47,4 @@ Route::post('user/avatar', [App\Http\Controllers\UserProfileController::class, '
 // Employer Routes
 Route::view('employer/register', 'auth.employer_register')->name('employer.register');
 Route::post('emp/register', [App\Http\Controllers\EmployerRegisterController::class, 'employerRegister'])->name('emp.register');
+Route::post('/applications/{id}', [App\Http\Controllers\JobController::class, 'apply'])->name('apply');

@@ -85,6 +85,10 @@
                                         <a class="dropdown-item" href="{{ route('jobs.my-job') }}">
                                             {{ __('My Jobs') }}
                                         </a>
+
+                                        <a class="dropdown-item" href="{{ route('jobs.applications') }}">
+                                            {{ __('Applicants') }}
+                                        </a>
                                     @else
                                         <a class="dropdown-item" href="{{ route('profile.index') }}">
                                             {{ __('Profile') }}

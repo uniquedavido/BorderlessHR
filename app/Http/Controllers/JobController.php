@@ -8,16 +8,37 @@ use App\Models\Company;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\JobPostRequest;
+use Auth;
 
 class JobController extends Controller
 {
     public function __construct(){
-        $this->middleware('employer', ['except' => array('index', 'show')]);
+        $this->middleware('employer', ['except' => array('index', 'show', 'apply', 'alljobs')]);
     }
 
     public function index(){
-        $jobs = Job::all()->take(10);
-        return view('welcome')->with('jobs', $jobs);
+        $jobs = Job::latest()->limit(10)->where('status', 1)->get();
+        $companies = Company::get()->random(12);
+        return view('welcome')->with('jobs', $jobs)->with('companies', $companies);
+    }
+
+    public function alljobs(Request $request){
+        $keyword = $request->title;
+        $type = $request->type;
+        $category = $request->category;
+        $address = $request->address;
+
+        if(!(empty($keyword || $type || $category || $address))){
+            $jobs = Job::where('title', 'LIKE', '%'.$keyword.'%')
+                    ->orWhere('type', $type)
+                    ->orWhere('category_id', $category)
+                    ->orWhere('address', $address)
+                    ->paginate(10);
+        }else{
+            $jobs = Job::latest()->paginate(10);
+        }
+        $categories = Category::all();
+        return view('jobs.all-jobs')->with('jobs', $jobs)->with('categories', $categories);
     }
 
     public function show($id, Job $job){
@@ -33,6 +54,11 @@ class JobController extends Controller
         $job = Job::findOrFail($id);
         $categories = Category::all();
         return view('jobs.edit')->with('categories', $categories)->with('job', $job);
+    }
+
+    public function applicants(){
+        $applicants = Job::has('users')->where('user_id', auth()->user()->id)->get();
+        return view('jobs.applicants')->with('applicants', $applicants);
     }
 
     public function create(){
@@ -70,5 +96,11 @@ class JobController extends Controller
             'last_date' => $request->last_date,
         ]);
         return redirect()->back()->with('message', 'Job created successfully');
+    }
+
+    public function apply(Request $request, $id){
+        $jobId = Job::find($id);
+        $jobId->users()->attach(Auth::user()->id);
+        return redirect()->back()->with('message', 'Application sent!');
     }
 }

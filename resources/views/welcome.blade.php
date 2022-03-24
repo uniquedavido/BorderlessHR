@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Recent Jobs') }}</div>
 
@@ -20,7 +20,7 @@
                             @foreach($jobs as $job)
                             <tr>
                                 <td>
-                                    <img src="{{asset('avatar/female_avatar.png')}}" width="40px" height="40px" alt="">
+                                    <img src="{{asset('uploads/logo')}}/{{$job->company->logo}}" width="40px" height="40px" alt="">
                                 </td>
                                 <td>
                                     Position : {{$job->position}}
@@ -41,7 +41,27 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <a href="{{route('jobs.alljobs')}}"><button class="btn btn-success btn-lg" style="width:100%;">Browse all jobs</button></a>
+                    <br><br><hr>
+                    <h3>Featured Companies</h3>
+                    <div class="container">
+                        <div class="row">
+                            @foreach($companies as $company)
+                            <div class="col-md-3 mt-4 pl-2">
+                                <div class="card" style="width: 16rem;">
+                                    <img class="card-img-top" alt="Card image cap" src="{{asset('uploads/logo')}}/{{$company->logo}}" style="width:100%" alt="">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$company->name}}</h5>
+                                        <p class="card-text">{{Str::limit($company->description, 40)}}</p>
+                                        <a href="{{route('company.index', [$company->id, $company->slug])}}" class="btn btn-success">view company</a>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
