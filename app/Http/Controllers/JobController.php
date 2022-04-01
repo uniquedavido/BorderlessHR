@@ -13,7 +13,7 @@ use Auth;
 class JobController extends Controller
 {
     public function __construct(){
-        $this->middleware(['employer','verified'], ['except' => array('index', 'show', 'apply', 'alljobs')]);
+        $this->middleware(['employer','verified'], ['except' => array('index', 'show', 'apply', 'alljobs', 'searchJobs')]);
     }
 
     public function index(){
@@ -102,5 +102,13 @@ class JobController extends Controller
         $jobId = Job::find($id);
         $jobId->users()->attach(Auth::user()->id);
         return redirect()->back()->with('message', 'Application sent!');
+    }
+
+    public function searchJobs(Request $request){
+        $keyword = $request->keyword;
+        $job = Job::where('title', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('position', 'LIKE', '%'.$keyword.'%')
+                ->limit(5)->get();
+        return response()->json($job);
     }
 }

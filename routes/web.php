@@ -69,3 +69,10 @@ Route::post('user/avatar', [App\Http\Controllers\UserProfileController::class, '
 Route::view('employer/register', 'auth.employer_register')->name('employer.register');
 Route::post('emp/register', [App\Http\Controllers\EmployerRegisterController::class, 'employerRegister'])->name('emp.register');
 Route::post('/applications/{id}', [App\Http\Controllers\JobController::class, 'apply'])->name('apply');
+
+// Save and Unsave Jobs
+Route::post('/save/{id}', [App\Http\Controllers\FavouriteJobController::class, 'saveJob'])->name('save');
+Route::post('/unsave/{id}', [App\Http\Controllers\FavouriteJobController::class, 'unsaveJob'])->name('unsave');
+
+// Search
+Route::get('/jobs/search', [App\Http\Controllers\JobController::class, 'searchJobs'])->name('jobs.search');
